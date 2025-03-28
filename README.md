@@ -50,8 +50,8 @@ GRANT USAGE, CREATE ON SCHEMA test_cm TO byte_adm;
 ## Instalación
 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/test-client.git
-cd test-client
+git clone git@github.com:danielstvn/prueba-practica-alianza.git
+cd prueba-practica-alianza
 ```
 
 2. Configurar Backend (Java)
