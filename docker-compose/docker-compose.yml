@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  postgresql:
+    image: postgres:latest
+    hostname: postgresql.byte.com
+    container_name: postgresql
+    environment:
+        POSTGRES_DB: bytedb
+        POSTGRES_USER: byte_adm
+        POSTGRES_PASSWORD: b1t3_4dm
+        POSTGRES_HOST_AUTH_METHOD: md5
+        TZ: America/Bogota
+    command: postgres -c 'max_connections=1000'
+    ports:
+        - 5432:5432
+    restart: always
+    volumes:
+      - /byte/docker/volumes/postgresdb:/var/lib/postgresql/data
