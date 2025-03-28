@@ -1,5 +1,11 @@
 # Test Client
 
+En este archivo se encuentra la información de las configuraciones necesarias para levantar los microservicios de la prueba
+
+(recomendación)
+### Proyecto Angular v18
+- ejecutar con comando ## npm run dev
+
 ## Descripción
 Es un proyecto de prueba que contiene un microfrontend de gestión de clientes desarrollado en Angular y un servicio backend desarrollado en Java con Gradle y Java versión 17. Implementa conexión con base de datos PostgreSQL, utilizando migraciones para la gestión del esquema de base de datos.
 
@@ -9,8 +15,16 @@ Es un proyecto de prueba que contiene un microfrontend de gestión de clientes d
 - PostgreSQL
 
 ## Configuración de Base de Datos
+Se comparte archivo docke-compose.yml con la configuración incial de la base de datos postgresql :
 
-### Crear Base de Datos y Esquema
+### Configuración base de datos implementando la base de datos configurada en el microservicio ( recomendado )
+se debe crear el siguiente esquema :
+
+```bash
+# crear esquema test_cm
+```
+
+### Configuración Base de Datos nueva y Esquema ( omitir si se aplico la configuración anterior)
 ```bash
 # Iniciar sesión en PostgreSQL
 psql -U postgres
@@ -38,14 +52,6 @@ GRANT USAGE, CREATE ON SCHEMA test_cm TO byte_adm;
 - **Usuario**: byte_adm
 - **Puerto**: 5432
 - **Host**: localhost
-
-### Configuración Adicional
-- Zona Horaria: UTC
-- Pool de Conexiones: 
-  * Tamaño máximo: 10 conexiones
-  * Conexiones mínimas inactivas: 5
-  * Timeout de conexión: 50 segundos
-  * Timeout de conexión inactiva: 10 minutos
 
 ## Instalación
 1. Clonar el repositorio
