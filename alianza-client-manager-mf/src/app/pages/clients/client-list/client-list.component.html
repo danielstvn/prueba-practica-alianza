@@ -1,0 +1,169 @@
+<div class="flex flex-col h-full bg-gray-50 rounded-lg shadow-sm p-6">
+  <!-- header -->
+  <div class="mb-6 flex items-center justify-between bg-gradient-to-r from-blue-50 to-blue-100 p-4 rounded-lg shadow-sm">
+    <div class="flex items-center">
+      <h2 class="text-2xl font-semibold text-blue-800 mb-0 mr-4">Clients</h2>
+      <span class="text-sm text-blue-500 bg-blue-50 px-3 py-1 rounded-full">Management</span>
+    </div>
+    <div class="text-sm text-gray-500">
+      <i class="pi pi-users mr-1"></i> Total: {{ clients.length || 0 }}
+    </div>
+  </div>
+
+  <!-- actions -->
+  <div class="flex flex-wrap gap-3 mb-6 items-center">
+    <button
+    pButton
+    type="button"
+    label="New Client"
+    icon="pi pi-plus"
+    class="p-button-primary p-button-raised bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-none px-4 py-2 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium flex items-center gap-2"
+    (click)="openNewClientDialog()">
+  </button>
+
+  <button
+    pButton
+    type="button"
+    label="Export Data"
+    icon="pi pi-download"
+    class="p-button-secondary p-button-raised bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 border-none px-4 py-2 text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium flex items-center gap-2"
+    (click)="exportToCSV()">
+  </button>
+
+    <div class="flex-1"></div>
+
+    <div class="flex gap-2">
+      <div class="p-inputgroup shadow-sm">
+        <span class="p-inputgroup-addon bg-white border-r-0">
+          <i class="pi pi-key text-gray-400"></i>
+        </span>
+        <input
+          type="text"
+          pInputText
+          placeholder="Search by shared key..."
+          [(ngModel)]="searchKey"
+          (keyup.enter)="searchClients()"
+          class="p-inputtext-sm border-r-0">
+        <button
+          type="button"
+          pButton
+          icon="pi pi-search"
+          class="p-button-primary"
+          (click)="searchClients()">
+        </button>
+      </div>
+      <button
+        pButton
+        type="button"
+        label="Advanced"
+        icon="pi pi-filter"
+        class="p-button-info p-button-raised shadow-sm whitespace-nowrap px-3 py-2 min-w-max"
+        (click)="openAdvancedSearchDialog()">
+      </button>
+    </div>
+  </div>
+
+  <!-- table clients -->
+  <div class="bg-white rounded-lg shadow-sm ">
+    <p-table
+      [value]="clients"
+      [paginator]="true"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [loading]="loading"
+      styleClass="p-datatable-sm pr-4 pl-4">
+
+      <ng-template pTemplate="header">
+        <tr class="bg-gray-50">
+          <th pSortableColumn="sharedKey" class="text-blue-800">Shared Key <p-sortIcon field="sharedKey"></p-sortIcon></th>
+          <th pSortableColumn="name" class="text-blue-800">Business ID <p-sortIcon field="name"></p-sortIcon></th>
+          <th pSortableColumn="email" class="text-blue-800">E-mail <p-sortIcon field="email"></p-sortIcon></th>
+          <th pSortableColumn="phone" class="text-blue-800">Phone <p-sortIcon field="phone"></p-sortIcon></th>
+          <th pSortableColumn="dataAdded" class="text-blue-800">Date Added <p-sortIcon field="dataAdded"></p-sortIcon></th>
+          <th style="width: 70px" class="text-blue-800">Actions</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-client let-even="even">
+        <tr [ngClass]="{'bg-blue-50/30': even}">
+          <td>
+            <span class="font-medium">{{client.sharedKey}}</span>
+          </td>
+          <td>{{client.name}}</td>
+          <td>
+            <a href="mailto:{{client.email}}" class="text-blue-600 hover:text-blue-800">
+              {{client.email}}
+            </a>
+          </td>
+          <td>
+            <a href="tel:{{client.phone}}" class="text-gray-700">
+              {{client.phone}}
+            </a>
+          </td>
+          <td>
+            <span class="p-1 bg-gray-100 rounded text-xs text-gray-700">
+              {{client.dataAdded | date: 'dd/MM/yyyy'}}
+            </span>
+          </td>
+          <td>
+            <p-button
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text p-button-sm"
+              [pTooltip]="'Edit Client'"
+              tooltipPosition="top"
+              (click)="onEditClient(client)">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">
+            <div class="flex flex-col items-center justify-center p-6 text-center">
+              <i class="pi pi-search text-gray-300 text-5xl mb-4"></i>
+              <h3 class="text-xl text-gray-500 font-light">No clients found</h3>
+              <p class="text-gray-400 mt-2">Try adjusting your search criteria or add a new client.</p>
+              <button
+                pButton
+                label="Add New Client"
+                icon="pi pi-plus"
+                class="p-button-primary mt-4"
+                (click)="openNewClientDialog()">
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="paginatorleft">
+        <div class="text-sm text-gray-500">
+          {{clients.length || 0}} total clients
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- client form dialog -->
+<app-client-form
+  *ngIf="displayClientForm"
+  [display]="displayClientForm"
+  [client]="selectedClient"
+  [formMode]="formMode"
+  (onClose)="displayClientForm = false"
+  (onSave)="onClientSaved($event)">
+</app-client-form>
+
+<!-- advanced search dialog -->
+<app-advanced-search
+  *ngIf="displayAdvancedSearch"
+  [display]="displayAdvancedSearch"
+  (onClose)="displayAdvancedSearch = false"
+  (onSearch)="advancedSearch($event)">
+</app-advanced-search>
+
+<!-- toast-->
+<p-toast position="top-right" styleClass="shadow-md rounded-lg"></p-toast>

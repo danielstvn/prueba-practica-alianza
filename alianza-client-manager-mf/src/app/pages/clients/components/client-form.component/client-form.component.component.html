@@ -1,0 +1,167 @@
+<p-dialog
+  [(visible)]="display"
+  [style]="{width: '60vw', height:'80vh'}"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="shadow-xl rounded-xl overflow-hidden border-0"
+  [showHeader]="false"
+  (onHide)="closeDialog()">
+
+  <!-- header -->
+  <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-5 -mx-4 -mt-4 mb-6 flex items-center justify-between">
+    <div class="flex items-center">
+      <i class="pi pi-user-plus text-white mr-3 text-xl"></i>
+      <h2 class="text-xl font-semibold text-white">{{dialogTitle}}</h2>
+    </div>
+    <button
+      pButton
+      icon="pi pi-times"
+      class="p-button-rounded p-button-text p-button-sm hover:bg-blue-600/50 text-white"
+      (click)="closeDialog()">
+    </button>
+  </div>
+
+  <!-- form client -->
+  <form [formGroup]="clientForm" (ngSubmit)="saveClient()" class="px-5 py-2">
+    <div class="grid grid-cols-1 gap-5">
+      <!-- Name -->
+      <div class="field">
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <i class="pi pi-user text-blue-400"></i>
+          </span>
+          <input
+            id="name"
+            type="text"
+            pInputText
+            formControlName="name"
+            class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            [ngClass]="{'border-red-400 ring-2 ring-red-200': clientForm.get('name')?.invalid && clientForm.get('name')?.touched}">
+        </div>
+        <small
+          *ngIf="clientForm.get('name')?.invalid && clientForm.get('name')?.touched"
+          class="text-red-500 flex items-center mt-2 text-xs">
+          <i class="pi pi-exclamation-circle mr-1"></i>
+          Name is required
+        </small>
+      </div>
+
+      <!-- Phone -->
+      <div class="field">
+        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <i class="pi pi-phone text-blue-400"></i>
+          </span>
+          <input
+            id="phone"
+            type="text"
+            pInputText
+            formControlName="phone"
+            class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            [ngClass]="{'border-red-400 ring-2 ring-red-200': clientForm.get('phone')?.invalid && clientForm.get('phone')?.touched}">
+        </div>
+        <small
+          *ngIf="clientForm.get('phone')?.invalid && clientForm.get('phone')?.touched"
+          class="text-red-500 flex items-center mt-2 text-xs">
+          <i class="pi pi-exclamation-circle mr-1"></i>
+          Valid phone number is required (10-15 digits)
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">E-mail</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <i class="pi pi-envelope text-blue-400"></i>
+          </span>
+          <input
+            id="email"
+            type="email"
+            pInputText
+            formControlName="email"
+            class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all"
+            [ngClass]="{'border-red-400 ring-2 ring-red-200': clientForm.get('email')?.invalid && clientForm.get('email')?.touched}">
+        </div>
+        <small
+          *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched"
+          class="text-red-500 flex items-center mt-2 text-xs">
+          <i class="pi pi-exclamation-circle mr-1"></i>
+          Valid email is required
+        </small>
+      </div>
+
+      <!-- Date Fields -->
+      <div class="bg-blue-50 p-5 rounded-xl mb-2 shadow-inner">
+        <h3 class="text-sm font-medium text-gray-700 mb-4 flex items-center">
+          <i class="pi pi-calendar text-blue-500 mr-2"></i>
+          Client Date Information
+        </h3>
+        <div class="grid grid-cols-2 gap-5">
+          <!-- Start Date -->
+          <div class="field">
+            <label for="startDate" class="block text-sm text-gray-600 mb-2">Start Date</label>
+            <p-calendar
+              id="startDate"
+              formControlName="startDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              styleClass="w-full"
+              [inputStyleClass]="clientForm.get('startDate')?.invalid && clientForm.get('startDate')?.touched ?
+                'rounded-lg py-2.5 border-red-400 shadow-sm transition-all focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500' :
+                'rounded-lg py-2.5 border-gray-300 shadow-sm transition-all focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500'"
+              appendTo="body">
+            </p-calendar>
+            <small
+              *ngIf="clientForm.get('startDate')?.invalid && clientForm.get('startDate')?.touched"
+              class="text-red-500 flex items-center mt-2 text-xs">
+              <i class="pi pi-exclamation-circle mr-1"></i>
+              Start date is required
+            </small>
+          </div>
+
+          <!-- End Date -->
+          <div class="field">
+            <label for="endDate" class="block text-sm text-gray-600 mb-2">End Date</label>
+            <p-calendar
+              id="endDate"
+              formControlName="endDate"
+              [showIcon]="true"
+              dateFormat="dd/mm/yy"
+              styleClass="w-full"
+              [inputStyleClass]="'rounded-lg py-2.5 border-gray-300 shadow-sm transition-all focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500'"
+              appendTo="body">
+            </p-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- actions -->
+  <div class="pt-4 pb-4 border-t border-gray-200 mt-4 flex justify-end px-5 bg-gray-50 gap-3">
+    <button
+      pButton
+      icon="pi pi-times"
+      label="Cancel"
+      class="p-button-text p-button-secondary bg-white shadow-sm border border-gray-300 hover:bg-gray-100 transition-all duration-200 rounded-lg px-4 py-2.5"
+      (click)="closeDialog()">
+    </button>
+    <button
+      pButton
+      icon="pi pi-check"
+      label="Save Client"
+      [loading]="submitting"
+      [disabled]="clientForm.invalid"
+      class="p-button-raised bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 border-none text-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 font-medium flex items-center gap-2 px-4 py-2.5"
+      (click)="saveClient()">
+    </button>
+  </div>
+</p-dialog>
+
+
+<!-- toast-->
+<p-toast position="top-right" styleClass="shadow-md rounded-lg"></p-toast>

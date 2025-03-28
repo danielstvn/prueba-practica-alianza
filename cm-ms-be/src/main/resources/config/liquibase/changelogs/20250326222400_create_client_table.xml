@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Changelog for creating the client table with improved specifications
+-->
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!--
+        Changeset to create the 'cmt_client' table and its constraints
+    -->
+    <changeSet id="client-table" author="danielg">
+        <!-- Creation of the client table with its columns -->
+        <createTable tableName="cmt_client" remarks="Table that stores system clients">
+            <column name="id" type="uuid" remarks="Unique client identifier (UUID)">
+                <constraints primaryKey="true" nullable="false" primaryKeyName="cmt_client_pk"/>
+            </column>
+            <column name="shared_key" type="varchar(50)" remarks="Unique shared key identifier for client">
+                <constraints nullable="false" unique="true" uniqueConstraintName="cmt_client_shared_key_uk"/>
+            </column>
+            <column name="name" type="varchar(100)" remarks="Client's first name">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(100)" remarks="Client's email address">
+                <constraints nullable="false" unique="true" uniqueConstraintName="cmt_client_email_uk"/>
+            </column>
+            <column name="phone" type="varchar(10)" remarks="Client's phone number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="timestamp" remarks="Client relationship start date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="timestamp" remarks="Client relationship end date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_added" type="timestamp" remarks="Record creation timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+
+        <comment>The client table has been successfully created with its constraints and indexes</comment>
+    </changeSet>
+
+    <changeSet id="cmt_client_data" author="danielg" context="dev">
+        <loadData
+                file="config/liquibase/fake-data/clients.csv"
+                separator=";"
+                tableName="cmt_client">
+            <column name="id" type="string"/>
+            <column name="shared_key" type="string"/>
+            <column name="name" type="string"/>
+            <column name="email" type="string"/>
+            <column name="phone" type="string"/>
+            <column name="start_date" type="timestamp"/>
+            <column name="end_date" type="timestamp"/>
+            <column name="data_added" type="timestamp"/>
+
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>
