@@ -4,7 +4,14 @@ En este archivo se encuentra la información de las configuraciones necesarias p
 
 (recomendación)
 ### Proyecto Angular v18
-- ejecutar con comando ## npm run dev
+
+Para levantar el micro-frontend de Angular se debe :
+ - Entrar a la carpeta : alianza-client-manager-mf
+ - Ejecutar el siguiente comando
+   
+```bash
+# npm run dev
+```
 
 ## Descripción
 Es un proyecto de prueba que contiene un microfrontend de gestión de clientes desarrollado en Angular y un servicio backend desarrollado en Java con Gradle y Java versión 17. Implementa conexión con base de datos PostgreSQL, utilizando migraciones para la gestión del esquema de base de datos.
