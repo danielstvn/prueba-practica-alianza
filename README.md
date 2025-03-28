@@ -78,7 +78,7 @@ cd prueba-practica-alianza
 2. Configurar Backend (Java)
 ```bash
 # Navegar al directorio del backend
-cd backend
+cd cm-ms-be
 
 # Compilar el proyecto
 gradle clean build
@@ -87,23 +87,18 @@ gradle clean build
 3. Configurar Frontend (Angular)
 ```bash
 # Navegar al directorio del frontend
-cd frontend
+cd alianza-client-manager-mf
 
 # Instalar dependencias
 npm install
+
 ```
 
 ## Ejecución
 
-### Backend
-```bash
-# En el directorio backend
-gradle bootRun
-```
-
 ### Frontend
 ```bash
-# En el directorio frontend
+# En el directorio alianza-client-manager-mf
 npm run dev
 ```
 
@@ -115,6 +110,7 @@ npm run dev
 test-client/
 ├── backend/           # Proyecto backend Java
 ├── frontend/          # Proyecto frontend Angular
+├── docker-compose/          # Configuración docker 
 └── README.md
 ```
 
