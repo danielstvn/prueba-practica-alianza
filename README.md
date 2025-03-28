@@ -14,11 +14,19 @@ Es un proyecto de prueba que contiene un microfrontend de gestión de clientes d
 - Gradle
 - PostgreSQL
 
-## Configuración de Base de Datos
-Se comparte archivo docke-compose.yml con la configuración incial de la base de datos postgresql :
+## Configuración de Base de Datos ( recomendado )
+se comparte la carpeta docker-compose, en la cual se encuentra un script que debe ejecutarse para crear el volumen de la base de datos y el contenedor de postgres.
 
-### Configuración base de datos implementando la base de datos configurada en el microservicio ( recomendado )
-se debe crear el siguiente esquema :
+# Ejecutar en una terminal el comando 
+
+```bash
+# sudo ./run-docker-compose-svc.sh
+```
+
+este script creara el volumen de la base de datos y ejecutara el archivo docker-compose.yml para crear el contendor de postgresql.
+
+### Creación de esquema
+se debe crear el siguiente esquema en la base de datos antes de levantar el microservicio backend:
 
 ```bash
 # crear esquema test_cm
